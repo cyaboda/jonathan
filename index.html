@@ -77,46 +77,86 @@
 <audio id="openingAudio" preload="auto" src="./AUDIO.wav" aria-hidden="true"></audio>
 <script>
 'use strict';
-// PERSONALIZACIÓN: sustituye estos valores cuando tengas los datos reales.
 const EVENT={date:'Por confirmar',time:'Por confirmar',place:'Por confirmar'};
-const params=new URLSearchParams(window.location.search);
-const raw=params.get('invitado')||params.get('nombre')||'Invitado Celea';
-const guestName=(raw.trim().slice(0,70)||'Invitado Celea').toLocaleUpperCase('es');
-document.querySelector('#guest').textContent=guestName;
-document.querySelector('#eventDate').textContent=EVENT.date;
-document.querySelector('#eventTime').textContent=EVENT.time;
-document.querySelector('#eventPlace').textContent=EVENT.place;
+const SUPABASE_URL='https://vgoooyctkzvaeknrlzvu.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY='sb_publishable_X8f3MFYjB1DFVKqo40xajA_6PA3AMFE';
+const EVENTO_SUPABASE='cr7';
+const params=new URLSearchParams(location.search);
+function obtenerCodigo(){
+ const q=params.get('i')||params.get('codigo');
+ if(q)return q.trim().toUpperCase();
+ const saved=sessionStorage.getItem('codigoInvitacion');
+ if(saved){sessionStorage.removeItem('codigoInvitacion');return saved.trim().toUpperCase();}
+ const last=decodeURIComponent(location.pathname.split('/').filter(Boolean).pop()||'');
+ return last && !last.includes('.') && last.toLowerCase()!=='convocatoria_cr7' ? last.trim().toUpperCase() : '';
+}
+const codigo=obtenerCodigo();
+async function rpc(name,body){
+ const res=await fetch(`${SUPABASE_URL}/rest/v1/rpc/${name}`,{method:'POST',headers:{apikey:SUPABASE_PUBLISHABLE_KEY,'Content-Type':'application/json'},body:JSON.stringify(body),cache:'no-store'});
+ if(!res.ok)throw new Error(`Supabase ${res.status}: ${await res.text()}`);
+ return res.json();
+}
+const guest=document.querySelector('#guest');
+const note=document.querySelector('#confirmationNote');
 const second=document.querySelector('#second');
 const cover=document.querySelector('#cover');
-const openingAudio=document.querySelector('#openingAudio');
+const audio=document.querySelector('#openingAudio');
 const openButton=document.querySelector('#open');
 const backButton=document.querySelector('#back');
 const confirmButton=document.querySelector('#confirm');
-let audioPlayed=false;
+let invitado=null, audioPlayed=false, saving=false;
+document.querySelector('#eventDate').textContent=EVENT.date;
+document.querySelector('#eventTime').textContent=EVENT.time;
+document.querySelector('#eventPlace').textContent=EVENT.place;
+confirmButton.disabled=true;
+confirmButton.style.opacity='.55';
+function estadoActual(){return String(invitado?.estado||'').trim().toUpperCase();}
+function actualizarConfirmacion(){
+ if(!invitado){confirmButton.disabled=true;return;}
+ const estado=estadoActual();
+ if(estado==='CONFIRMADO'||estado==='SI'){
+  confirmButton.textContent='FICHAJE CONFIRMADO ✓';
+  note.textContent='Tu asistencia ya está registrada.';
+  confirmButton.disabled=true;
+ }else if(estado==='NO'||estado==='RECHAZADO'){
+  confirmButton.textContent='FICHAJE NO CONFIRMADO';
+  note.textContent='Esta convocatoria figura como no aceptada.';
+  confirmButton.disabled=true;
+ }else{
+  confirmButton.textContent='CONFIRMAR FICHAJE ✓';
+  note.textContent='';
+  confirmButton.disabled=false;
+ }
+ confirmButton.style.opacity=confirmButton.disabled?'.65':'1';
+}
+async function cargarInvitado(){
+ if(!codigo){guest.textContent='CONVOCATORIA PERSONAL';note.textContent='Abre tu enlace personalizado para confirmar tu fichaje.';return;}
+ guest.textContent='CARGANDO CONVOCATORIA…';
+ try{
+  const data=await rpc('obtener_invitado',{p_evento:EVENTO_SUPABASE,p_codigo:codigo});
+  invitado=Array.isArray(data)?data[0]:data;
+  if(!invitado||!invitado.nombre){guest.textContent='CÓDIGO NO ENCONTRADO';note.textContent='No encontramos esta convocatoria. Revisa tu enlace.';return;}
+  guest.textContent=String(invitado.nombre).trim().slice(0,100).toLocaleUpperCase('es');
+  actualizarConfirmacion();
+ }catch(err){console.error('Error cargando invitado CR7:',err);guest.textContent='NO SE PUDO CARGAR';note.textContent='Inténtalo nuevamente más tarde.';}
+}
 openButton.addEventListener('click',()=>{
-  if(!audioPlayed){
-    audioPlayed=true;
-    openingAudio.loop=false;
-    openingAudio.currentTime=0;
-    const playback=openingAudio.play();
-    if(playback&&typeof playback.catch==='function')playback.catch(()=>{});
-  }
-  second.classList.add('visible');
-  second.setAttribute('aria-hidden','false');
-  cover.setAttribute('inert','');
-  backButton.focus({preventScroll:true});
+ if(!audioPlayed){audioPlayed=true;audio.loop=false;audio.currentTime=0;const play=audio.play();if(play&&play.catch)play.catch(()=>{});}
+ second.classList.add('visible');second.setAttribute('aria-hidden','false');cover.setAttribute('inert','');backButton.focus({preventScroll:true});
 });
-backButton.addEventListener('click',()=>{
-  second.classList.remove('visible');
-  second.setAttribute('aria-hidden','true');
-  cover.removeAttribute('inert');
-  openButton.focus({preventScroll:true});
+backButton.addEventListener('click',()=>{second.classList.remove('visible');second.setAttribute('aria-hidden','true');cover.removeAttribute('inert');openButton.focus({preventScroll:true});});
+confirmButton.addEventListener('click',async()=>{
+ if(!invitado||saving||estadoActual()==='CONFIRMADO')return;
+ saving=true;confirmButton.disabled=true;confirmButton.style.opacity='.65';note.textContent='Registrando tu fichaje…';
+ try{
+  const cupos=Math.max(1,Number(invitado.cupos)||1);
+  const ok=await rpc('responder_invitacion',{p_evento:EVENTO_SUPABASE,p_codigo:codigo,p_estado:'CONFIRMADO',p_asisten:cupos,p_acompanantes:null,p_nota:invitado.nota||null});
+  if(ok!==true)throw new Error('La función no confirmó el guardado.');
+  invitado.estado='CONFIRMADO';invitado.asisten=cupos;actualizarConfirmacion();
+ }catch(err){console.error('Error confirmando fichaje CR7:',err);note.textContent='No se pudo registrar tu fichaje. Inténtalo otra vez.';confirmButton.disabled=false;confirmButton.style.opacity='1';}
+ finally{saving=false;}
 });
-confirmButton.addEventListener('click',()=>{
-  // Futuro: consultar la invitación y registrar el RSVP en Supabase.
-  // No se envían datos ni se registra una confirmación en esta versión.
-  document.querySelector('#confirmationNote').textContent='El registro de fichajes estará disponible próximamente.';
-});
+cargarInvitado();
 </script>
 </body>
 </html>
