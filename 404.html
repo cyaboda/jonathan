@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Abriendo convocatoria | THE GOAT</title>
+<style>html,body{margin:0;min-height:100%;background:#080807;color:#e7c889;font-family:Georgia,serif;display:grid;place-items:center;text-align:center}p{letter-spacing:.13em}</style>
+</head>
+<body>
+<p>ABRIENDO CONVOCATORIA…</p>
+<script>
+(function(){
+  'use strict';
+  const parts=location.pathname.split('/').filter(Boolean);
+  // Compatible con dominio propio (/Codigo) y repositorio de GitHub Pages (/jonathan/Codigo).
+  const project=location.hostname.endsWith('.github.io') && parts[0]==='jonathan';
+  const root=project?'/jonathan/':'/';
+  const code=parts[project?1:0]||'';
+  if(!code || parts.length!==(project?2:1) || code.includes('.')){
+    document.querySelector('p').textContent='NO SE ENCONTRÓ ESTA CONVOCATORIA';
+    return;
+  }
+  const search=new URLSearchParams(location.search);
+  search.set('codigo',code);
+  location.replace(root+'?'+search.toString()+location.hash);
+})();
+</script>
+</body>
+</html>

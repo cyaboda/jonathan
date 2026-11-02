@@ -91,6 +91,12 @@ function obtenerCodigo(){
  return last && !last.includes('.') && last.toLowerCase()!=='convocatoria_cr7' ? last.trim().toUpperCase() : '';
 }
 const codigo=obtenerCodigo();
+// Mantener un enlace limpio en la barra del navegador sin alterar el código de Supabase.
+if(codigo && (params.has('codigo') || params.has('i'))){
+  const base=location.pathname.replace(/\/index\.html$/i,'/');
+  const root=base.endsWith('/')?base:base+'/';
+  history.replaceState(null,'',root+encodeURIComponent(codigo)+location.hash);
+}
 async function rpc(name,body){
  const res=await fetch(`${SUPABASE_URL}/rest/v1/rpc/${name}`,{method:'POST',headers:{apikey:SUPABASE_PUBLISHABLE_KEY,'Content-Type':'application/json'},body:JSON.stringify(body),cache:'no-store'});
  if(!res.ok)throw new Error(`Supabase ${res.status}: ${await res.text()}`);
