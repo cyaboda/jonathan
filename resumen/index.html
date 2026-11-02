@@ -964,7 +964,9 @@
     const SUPABASE_URL = "https://vgoooyctkzvaeknrlzvu.supabase.co";
     const SUPABASE_KEY = "sb_publishable_X8f3MFYjB1DFVKqo40xajA_6PA3AMFE";
     const INVITATION_BASE_URL = "https://jonathansampedro.party/";
-    const TOKEN_KEY = "cr7_panel_token";
+    const EVENTO_PANEL = "cr7";
+    const PIN_PANEL = "0711";
+    const TOKEN_KEY = "cr7_panel_token_v2";
     const EXPIRY_KEY = "cr7_panel_expiry";
 
     let resumenActual = null;
@@ -1148,6 +1150,12 @@
       $("loginError").textContent = "";
 
       try {
+        // Evita abrir sesiones de otros eventos desde este panel.
+        // La autorización real y el filtro por evento deben aplicarse en Supabase.
+        if (pin !== PIN_PANEL) {
+          $("loginError").textContent = "PIN incorrecto para esta convocatoria.";
+          return;
+        }
         const data = await supabaseRpc("panel_login", {
           p_pin: pin
         });
@@ -1157,6 +1165,10 @@
           return;
         }
 
+        if (data.evento && data.evento !== EVENTO_PANEL) {
+          $("loginError").textContent = "Este PIN pertenece a otro evento.";
+          return;
+        }
         guardarSesion(data.token, Number(data.duracionSegundos) || 28800);
         mostrarDashboard();
         await cargarResumen(false);
