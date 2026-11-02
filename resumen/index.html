@@ -1157,6 +1157,7 @@
           return;
         }
         const data = await supabaseRpc("panel_login", {
+          p_evento: EVENTO_PANEL,
           p_pin: pin
         });
 
