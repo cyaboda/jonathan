@@ -3,17 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#080807">
+  <meta name="theme-color" content="#0b0c0e">
   <meta name="robots" content="noindex,nofollow,noarchive">
   <!-- CELEA: iconos y apertura como app web -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="CR7">
+  <meta name="apple-mobile-web-app-title" content="Jonathan Sampedro">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  
-  
-  
-  <title>CR7 · Centro de Convocados | CELEA Studio</title>
+  <title>Resumen privado · Jonathan Sampedro</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -722,7 +719,6 @@
     .refresh-status { color:var(--text); font-size:12px; align-self:center; }
     @media (prefers-reduced-motion:reduce) { .loader-dots span { animation:none; } }
 
-    .cr7-loader-logo { font: 600 48px "Playfair Display",serif; letter-spacing:.06em; color:var(--sage-dark); margin-bottom:24px; }
     /* CELEA · administración de invitados. Mantiene la línea visual existente. */
     .admin-row { display:flex; justify-content:center; margin:0 0 18px; }
     .admin-add-btn {
@@ -765,105 +761,38 @@
       .delete-invite-btn { padding:7px 9px; font-size:9px; }
     }
 
-    /* CR7 • Edición Black & Gold • Paleta de la invitación original */
-    :root {
-      color-scheme: dark;
-      --bg:#080807; --card:rgba(26,22,16,.91);
-      --ink:#fff7e9; --text:#ddd0b7; --muted:#a99b84;
-      --sage:#e7c889; --sage-dark:#e7c889; --sage-soft:rgba(231,200,137,.12);
-      --green:#d7b97c; --amber:#d8ae63; --rose:#af8169;
-      --rose-soft:rgba(175,129,105,.17);
-      --line:rgba(231,200,137,.21);
-      --shadow:0 18px 45px rgba(0,0,0,.42);
-    }
-    body {
-      background:radial-gradient(ellipse at 50% -12%,rgba(111,78,30,.30),transparent 52%),
-                 radial-gradient(circle at 100% 55%,rgba(86,58,21,.13),transparent 45%),
-                 #080807;
-      color:var(--ink);
-    }
-    h1,.monogram,.brand,.attendance-number strong,.stat-value,.stat-copy::before,.mini-value,.list-title,.admin-modal-title,.celea-signature .celea-name {font-family:Georgia,'Times New Roman',serif;}
-    h1,.hero h1 {color:var(--ink);letter-spacing:.045em;}
-    .login-screen {background:radial-gradient(ellipse at center,rgba(120,78,27,.19),transparent 65%);}
-    .login-card,.overview-card,.stat-card,.mini-card,.guest,.admin-modal-card {
-      background:linear-gradient(145deg,rgba(48,37,22,.90),rgba(15,14,12,.97));
-      border:1px solid rgba(231,200,137,.23);
-      box-shadow:var(--shadow);
-    }
-    .login-card {border-radius:24px;position:relative;overflow:hidden;}
-    .login-card::before {content:'';position:absolute;top:0;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,#e7c889,transparent);}
-    .monogram {font-size:48px;font-weight:700;letter-spacing:.14em;color:#e7c889;text-shadow:0 0 35px rgba(231,200,137,.23);}
-    .eyebrow,.guest-badge {color:#e7c889;background:rgba(231,200,137,.10);border:1px solid rgba(231,200,137,.24);letter-spacing:.16em;}
-    .primary-btn,.export-btn {color:#080807;background:linear-gradient(115deg,#cda969,#f1d99b,#d8ae63);border:1px solid #e7c889;box-shadow:0 10px 35px rgba(216,174,99,.17);}
-    .primary-btn:hover,.export-btn:hover {filter:brightness(1.07);}
-    #pinInput,.admin-field input,.sort-row select {background:#17140f!important;color:#fff7e9!important;border:1px solid rgba(231,200,137,.35)!important;}
-    #pinInput:focus,.admin-field input:focus {border-color:#e7c889!important;box-shadow:0 0 0 4px rgba(231,200,137,.12)!important;}
-    .topbar {background:rgba(8,8,7,.88);border-bottom:1px solid rgba(231,200,137,.23);}
-    .brand {color:#e7c889;letter-spacing:.08em;font-weight:700;}
-    .icon-btn,.admin-add-btn,.admin-cancel-btn {background:rgba(231,200,137,.09);border:1px solid rgba(231,200,137,.27);color:#e7c889;}
-    .hero {background:radial-gradient(ellipse at 50% 5%,rgba(156,112,47,.18),transparent 65%);}
-    .hero .eyebrow {letter-spacing:.28em;}
-    .live-pill,.refresh-status,.celea-signature {color:#cda969;}
-    .dot {background:#e7c889;box-shadow:0 0 0 5px rgba(231,200,137,.11),0 0 16px rgba(231,200,137,.5);}
-    .progress {background:rgba(231,200,137,.12);}
-    .progress > span {background:linear-gradient(90deg,#9e773e,#e7c889,#f4dfaf);}
-    .stat-card.active {border-color:#e7c889;box-shadow:0 0 0 2px rgba(231,200,137,.15),var(--shadow);}
-    .stat-card:hover {border-color:rgba(231,200,137,.5);box-shadow:0 16px 38px rgba(0,0,0,.44);}
-    .confirmed .stat-dot {background:#e7c889;} .pending .stat-dot {background:#b99b63;} .declined .stat-dot {background:#8d6c5d;}
-    .guest {border-color:rgba(231,200,137,.15);}
-    .copy-invite-btn,.delete-invite-btn {background:rgba(231,200,137,.09);border:1px solid rgba(231,200,137,.3);color:#e7c889;}
-    .update-bar {background:rgba(231,200,137,.07);border-color:rgba(231,200,137,.19);color:#cda969;}
-    .celea-loader {background:#080807;} .cr7-loader-logo,.celea-loader h2 {color:#e7c889;}
-    .admin-modal {background:rgba(0,0,0,.77);}
-    .admin-modal-card {background:#17130f;border-color:rgba(231,200,137,.32);}
-    .login-error {color:#e3a29a;}
-    .empty {background:rgba(231,200,137,.045);border-color:rgba(231,200,137,.25);}
-    .toast {background:#302619;border:1px solid rgba(231,200,137,.4);color:#fff7e9;}
-    .celea-signature .designed-by {color:#ac9b7e;}
-    ::selection {background:#e7c889;color:#080807;}
-
-
-    /* CR7 custom layout · Black Gold Stadium */
-    .login-card {max-width:470px;padding:48px 34px 38px;background:linear-gradient(155deg,#272014,#0c0b09 72%)}
-    .login-card .monogram{font-family:Impact,'Arial Black',sans-serif;font-size:88px;line-height:1;letter-spacing:-.055em;font-style:italic;margin:8px 0 22px}
-    .login-card h1{font-family:Georgia,serif;font-size:clamp(37px,7vw,52px);line-height:1.07;letter-spacing:-.04em}
-    .login-card .eyebrow{font-size:10px;letter-spacing:.2em}
-    .topbar{padding-top:18px;padding-bottom:18px}
-    .brand{font:italic 900 30px/1 Impact,'Arial Black',sans-serif;letter-spacing:-.02em}
-    .hero{position:relative;text-align:left;padding:52px 0 36px;background:transparent}
-    .hero>.eyebrow{font-size:10px}
-    .hero-lockup{display:grid;grid-template-columns:130px minmax(0,1fr);gap:34px;align-items:center;margin-top:22px}
-    .hero-seven{font:italic 900 clamp(150px,20vw,230px)/.8 Impact,'Arial Black',sans-serif;color:#e7c889;letter-spacing:-.12em;text-shadow:0 5px 50px rgba(231,200,137,.19);transform:skew(-5deg)}
-    .hero-kicker{font:700 11px 'DM Sans',sans-serif;color:#e7c889!important;letter-spacing:.22em;margin:0 0 13px!important}
-    .hero h1{font:500 clamp(42px,6.5vw,76px)/.99 Georgia,serif;letter-spacing:-.055em;margin:0 0 15px}
-    .hero-lockup p:not(.hero-kicker){max-width:550px;line-height:1.7;font-size:15px}
-    .gold-dot{color:#e7c889}
-    .overview-card{padding:32px 34px;border-radius:18px}
-    .stat-card,.mini-card,.guest{border-radius:15px}
-    .stat-label{font-size:13px}
-    .squad-actions{border-top:1px solid var(--line);margin-top:15px;padding-top:14px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
-    .squad-actions span{font-size:10px;letter-spacing:.14em;font-weight:700;color:#a99b84;margin-right:4px}
-    .squad-actions button{cursor:pointer;border:1px solid rgba(231,200,137,.24);border-radius:8px;padding:8px 10px;background:rgba(231,200,137,.05);color:#dac9a6;font-size:11px}
-    .squad-actions button[aria-current="true"]{background:#e7c889;color:#080807;font-weight:700}
-    .squad-actions button:hover{border-color:#e7c889}
-    .guest-name{color:#fff7e9}
-    @media(max-width:650px){.hero{padding-top:36px}.hero-lockup{grid-template-columns:75px 1fr;gap:20px}.hero-seven{font-size:130px}.hero h1{font-size:clamp(35px,8vw,54px)}.hero-kicker{font-size:9px}.overview-card{padding:23px}.hero-lockup p:not(.hero-kicker){font-size:13px}}
-
+    /* CELEA / CR7: identidad negro, oro y cristal */
+    :root { --bg:#0b0c0e; --card:rgba(27,29,31,.94); --ink:#f5e9d1; --text:#c3bbac; --muted:#a79c89; --sage:#e2c27c; --sage-dark:#d5af62; --sage-soft:#322b20; --green:#83c58c; --amber:#e5bb6d; --rose:#e79b91; --rose-soft:#392625; --line:rgba(224,194,124,.18); --shadow:0 18px 45px rgba(0,0,0,.26); }
+    body {background:radial-gradient(circle at 15% 0%,rgba(162,117,47,.15),transparent 36%),radial-gradient(circle at 95% 30%,rgba(149,115,57,.07),transparent 35%),var(--bg)}
+    .login-card,.overview-card,.stat-card,.mini-card,.guest,.update-bar,.admin-modal-card,.empty {background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+    .topbar {background:rgba(11,12,14,.88)}
+    .monogram,.brand,.hero h1,.attendance-number strong,.mini-value,.stat-value,.list-title {color:#e8c987}
+    .primary-btn,.export-btn {background:linear-gradient(120deg,#e9d098,#c49a4e);color:#19140d}
+    .icon-btn,.admin-add-btn,.sort-row select,.admin-cancel-btn {background:#242322;color:var(--ink);border-color:var(--line)}
+    #pinInput,.admin-field input {background:#1e2021;color:#fff5e5;border-color:var(--line)}
+    .progress {background:#34302a}.progress>span {background:linear-gradient(90deg,#ad8848,#e6c886)}
+    .update-bar {color:var(--text)}.guest-badge,.copy-invite-btn {background:#332b1c;color:#e7c889}
+    .toast {background:#e4c17d;color:#18130c}.celea-signature {color:#bda87f}
+    .stat-card.active {border-color:rgba(230,200,134,.55);box-shadow:0 0 0 2px rgba(230,200,134,.12)}
+    .login-card {backdrop-filter:blur(20px)}
+    .celea-loader img {display:none}.celea-loader h2 {color:var(--sage-dark)}
+    .admin-modal {background:rgba(0,0,0,.75)}
+    .login-error {color:#f0a49b}
   </style>
 </head>
 
 <body>
   <div class="celea-loader hidden" id="celeaLoader" role="status" aria-live="polite">
-    <div><div class="cr7-loader-logo">CR7</div>
-    <h2>CELEA</h2><p>Preparando los detalles de tu celebración…</p>
+    <div>
+    <h2>CELEA</h2><p>Preparando el vestuario de THE GOAT…</p>
     <div class="loader-dots" aria-hidden="true"><span></span><span></span><span></span></div></div>
   </div>
   <section class="login-screen" id="loginScreen">
     <div class="login-card">
-      <div class="monogram">CR7</div>
-      <span class="eyebrow">ACCESO DE DIRECTOR TÉCNICO</span>
-      <h1>La convocatoria</h1>
-      <p class="login-copy">Solo los seleccionados entran al equipo. Gestiona la lista oficial de invitados.</p>
+      <div class="monogram">CR7 · THE GOAT</div>
+      <span class="eyebrow">🔒 Panel privado</span>
+      <h1>THE GOAT</h1>
+      <p class="login-copy">Acceso exclusivo al panel de convocados de Jonathan Sampedro.</p>
 
       <form id="loginForm" autocomplete="off">
         <div class="pin-wrap">
@@ -887,7 +816,7 @@
 
   <main class="app hidden" id="dashboard">
     <header class="topbar">
-      <div class="brand">CR7</div>
+      <div class="brand">CR7 <span style="font:600 11px DM Sans,sans-serif;letter-spacing:.14em">/ THE GOAT</span></div>
 
       <div class="top-actions">
         <span class="refresh-status hidden" id="refreshStatus" role="status">Actualizando…</span>
@@ -898,14 +827,16 @@
 
     <div class="container">
       <section class="hero">
-        <span class="eyebrow">EDICIÓN ESPECIAL · CR7</span>
-        <div class="hero-lockup"><div class="hero-seven" aria-hidden="true">7</div><div><p class="hero-kicker">EL PARTIDO MÁS IMPORTANTE</p><h1>Centro de<br>convocados<span class="gold-dot">.</span></h1><p>El once ideal empieza con una gran lista. Gestiona aquí las confirmaciones de la celebración.</p><div class="live-pill"><span class="dot"></span> Panel de gestión</div></div></div>
+        <span class="eyebrow">JONATHAN SAMPEDRO · TEMPORADA 30</span>
+        <h1>Resumen</h1>
+        <p>Estado de los fichajes y convocatorias de la temporada 30.</p>
+        <div class="live-pill"><span class="dot"></span> En vivo</div>
       </section>
 
       <section class="overview-card">
         <div class="attendance-number">
           <strong id="totalAsisten">0</strong>
-          <span>jugadores en la lista</span>
+          <span>personas asistirán</span>
         </div>
 
         <div class="progress">
@@ -923,7 +854,7 @@
           <div class="stat-top"><span class="stat-dot"></span></div>
           <span class="stat-value" id="confirmedValue">0</span>
           <div class="stat-copy" id="confirmedCopy" data-count="0">
-            <span class="stat-label">Titulares confirmados</span>
+            <span class="stat-label">Confirmados</span>
             <span class="stat-sub">Toca para ver la lista</span>
           </div>
           <span class="stat-arrow">›</span>
@@ -933,7 +864,7 @@
           <div class="stat-top"><span class="stat-dot"></span></div>
           <span class="stat-value" id="pendingValue">0</span>
           <div class="stat-copy" id="pendingCopy" data-count="0">
-            <span class="stat-label">En espera</span>
+            <span class="stat-label">Sin responder</span>
             <span class="stat-sub">Toca para ver la lista</span>
           </div>
           <span class="stat-arrow">›</span>
@@ -943,7 +874,7 @@
           <div class="stat-top"><span class="stat-dot"></span></div>
           <span class="stat-value" id="declinedValue">0</span>
           <div class="stat-copy" id="declinedCopy" data-count="0">
-            <span class="stat-label">Bajas</span>
+            <span class="stat-label">No asistirán</span>
             <span class="stat-sub">Toca para ver la lista</span>
           </div>
           <span class="stat-arrow">›</span>
@@ -953,21 +884,21 @@
       <section class="secondary-grid">
         <div class="mini-card">
           <span class="mini-value" id="totalInvitaciones">0</span>
-          <span class="mini-label">Convocados registrados</span>
+          <span class="mini-label">Convocatorias registradas</span>
         </div>
 
         <div class="mini-card">
           <span class="mini-value" id="totalRespondidas">0</span>
-          <span class="mini-label">Respuestas recibidas</span>
+          <span class="mini-label">Invitaciones respondidas</span>
         </div>
       </section>
 
       <div class="export-row">
-        <button class="export-btn" id="exportExcelBtn" type="button">⇩ EXPORTAR ALINEACIÓN</button>
+        <button class="export-btn" id="exportExcelBtn" type="button">⇩ DESCARGAR LISTA DE ASISTENTES</button>
       </div>
 
       <div class="admin-row">
-        <button class="admin-add-btn" id="addGuestBtn" type="button">＋ Convocar jugador</button>
+        <button class="admin-add-btn" id="addGuestBtn" type="button">＋ Agregar invitado</button>
       </div>
 
       <section class="list-section hidden" id="listSection">
@@ -989,7 +920,7 @@
       </section>
 
       <div class="update-bar">
-        <span>Versión de prueba: los datos se guardan solo en este navegador.</span>
+        <span>Los datos se actualizan automáticamente.</span>
         <span id="updatedText">Actualizando…</span>
       </div>
 
@@ -1000,12 +931,12 @@
   <div class="admin-modal hidden" id="guestModal" role="dialog" aria-modal="true" aria-labelledby="guestModalTitle">
     <form class="admin-modal-card" id="guestForm" autocomplete="off">
       <div class="admin-modal-head">
-        <h2 class="admin-modal-title" id="guestModalTitle">Nuevo convocado</h2>
+        <h2 class="admin-modal-title" id="guestModalTitle">Agregar invitado</h2>
         <button class="admin-close-btn" id="closeGuestModalBtn" type="button" aria-label="Cerrar">×</button>
       </div>
 
       <div class="admin-field">
-        <label for="guestNameInput">Nombre del convocado</label>
+        <label for="guestNameInput">Nombre del invitado</label>
         <input id="guestNameInput" type="text" maxlength="120" required>
       </div>
 
@@ -1030,10 +961,9 @@
 
   <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script>
-    // DEMO LOCAL: No está conectado a una base de datos o RSVP público.
-    const INVITATION_BASE_URL = "";
-    const DB_KEY = "cr7_invitados_demo_v1";
-    const PANEL_PIN = "0711";
+    const SUPABASE_URL = "https://vgoooyctkzvaeknrlzvu.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_X8f3MFYjB1DFVKqo40xajA_6PA3AMFE";
+    const INVITATION_BASE_URL = "https://jonathansampedro.party/";
     const TOKEN_KEY = "cr7_panel_token";
     const EXPIRY_KEY = "cr7_panel_expiry";
 
@@ -1125,49 +1055,44 @@
 
     const $ = (id) => document.getElementById(id);
 
-    function obtenerInvitados() {
-      try { return JSON.parse(localStorage.getItem(DB_KEY) || "[]"); }
-      catch (_) { return []; }
-    }
-
-    function guardarInvitados(items) {
-      localStorage.setItem(DB_KEY, JSON.stringify(items));
-    }
-
-    // Adaptador local para probar el diseño sin tocar la boda de Nicole y Pablo.
-    // Para uso real hay que sustituirlo por una API con acceso autorizado en servidor.
     async function supabaseRpc(funcion, parametros = {}) {
-      const token = obtenerToken();
-      if (funcion === "panel_login") {
-        if (parametros.p_pin !== PANEL_PIN) return {ok:false, mensaje:"PIN incorrecto."};
-        return {ok:true, token:"cr7-demo-session", duracionSegundos:28800};
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 12000);
+
+      try {
+        const respuesta = await fetch(
+          SUPABASE_URL + "/rest/v1/rpc/" + encodeURIComponent(funcion),
+          {
+            method: "POST",
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify(parametros),
+            signal: controller.signal,
+            cache: "no-store"
+          }
+        );
+
+        const texto = await respuesta.text();
+        let data = null;
+        try { data = texto ? JSON.parse(texto) : null; } catch (_) {}
+
+        if (!respuesta.ok) {
+          const mensaje = data?.message || data?.hint || "No se pudo conectar con Supabase.";
+          throw new Error(mensaje);
+        }
+
+        return data;
+      } catch (error) {
+        if (error?.name === "AbortError") {
+          throw new Error("La solicitud tardó demasiado.");
+        }
+        throw error;
+      } finally {
+        clearTimeout(timeout);
       }
-      if (funcion === "panel_logout") return {ok:true};
-      if (!token || parametros.p_token !== token) return {ok:false, codigoError:"SESION_INVALIDA"};
-      let items = obtenerInvitados();
-      if (funcion === "panel_agregar_invitado") {
-        const codigo = String(parametros.p_codigo || "").trim();
-        if (items.some(i => i.codigo.toLowerCase() === codigo.toLowerCase())) return {ok:false, mensaje:"Ese código ya existe."};
-        items.push({invitado:parametros.p_nombre, codigo, cupos:parametros.p_cupos, asisten:0, estado:"pendientes", fechaRespuesta:"", acompanantes:"", notaRegalo:""});
-        guardarInvitados(items);
-        return {ok:true, mensaje:"Invitado agregado en este navegador."};
-      }
-      if (funcion === "panel_eliminar_invitado") {
-        items = items.filter(i => i.codigo !== parametros.p_codigo);
-        guardarInvitados(items);
-        return {ok:true, mensaje:"Invitado eliminado de este navegador."};
-      }
-      if (funcion === "panel_resumen") {
-        const confirmados = items.filter(i => i.estado === "confirmados");
-        const pendientes = items.filter(i => i.estado === "pendientes");
-        const noAsisten = items.filter(i => i.estado === "noAsisten");
-        return {ok:true, actualizado:new Date().toISOString(),
-          totales:{confirmados:confirmados.length, pendientes:pendientes.length, noAsisten:noAsisten.length,
-            invitaciones:items.length, cupos:items.reduce((n,i)=>n+Number(i.cupos||0),0),
-            personasAsisten:confirmados.reduce((n,i)=>n+Number(i.asisten||0),0)},
-          listas:{confirmados, pendientes, noAsisten}};
-      }
-      return {ok:false, mensaje:"Operación no disponible."};
     }
 
     function guardarSesion(token, segundos) {
@@ -1355,7 +1280,7 @@
       const blob = new Blob(["\ufeff" + filas.join("\r\n")], { type: "text/csv;charset=utf-8;" });
       const enlace = document.createElement("a");
       enlace.href = URL.createObjectURL(blob);
-      enlace.download = "CR7_Lista_de_Asistentes.csv";
+      enlace.download = "CR7_Jonathan_Sampedro_Asistentes.csv";
       document.body.appendChild(enlace);
       enlace.click();
       enlace.remove();
@@ -1391,7 +1316,7 @@
 
         const libro = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(libro, hoja, "Asistentes");
-        XLSX.writeFile(libro, "CR7_Lista_de_Asistentes.xlsx");
+        XLSX.writeFile(libro, "CR7_Jonathan_Sampedro_Asistentes.xlsx");
         toast("Lista de asistentes descargada");
       } catch (error) {
         console.error(error);
@@ -1496,12 +1421,6 @@
               </div>
             </div>
             ${extras.length ? '<div class="guest-extra">' + extras.join("") + '</div>' : ""}
-            <div class="squad-actions" aria-label="Actualizar asistencia">
-              <span>ESTADO</span>
-              <button type="button" data-set-status="confirmados" data-status-code="${escapeHtml(item.codigo || "")}" ${tipo === "confirmados" ? 'aria-current="true"' : ""}>✓ Titular</button>
-              <button type="button" data-set-status="pendientes" data-status-code="${escapeHtml(item.codigo || "")}" ${tipo === "pendientes" ? 'aria-current="true"' : ""}>◷ Espera</button>
-              <button type="button" data-set-status="noAsisten" data-status-code="${escapeHtml(item.codigo || "")}" ${tipo === "noAsisten" ? 'aria-current="true"' : ""}>× Baja</button>
-            </div>
           </article>
         `;
       }).join("");
@@ -1618,7 +1537,6 @@
         return;
       }
 
-      if (!INVITATION_BASE_URL) { toast("Configura primero el dominio público de CR7."); return; }
       const url = INVITATION_BASE_URL + encodeURIComponent(codigoLimpio);
 
       try {
@@ -1651,26 +1569,7 @@
       }
     }
 
-    async function actualizarEstado(codigo, estado) {
-      const items = obtenerInvitados();
-      const invitado = items.find(i => i.codigo === codigo);
-      if (!invitado || !["confirmados","pendientes","noAsisten"].includes(estado)) return;
-      invitado.estado = estado;
-      invitado.asisten = estado === "confirmados" ? Number(invitado.cupos || 1) : 0;
-      invitado.fechaRespuesta = estado === "pendientes" ? "" : new Date().toISOString();
-      guardarInvitados(items);
-      await cargarResumen(false);
-      renderLista(estado);
-      toast("Estado del convocado actualizado");
-    }
-
     document.addEventListener("click", (e) => {
-      const botonEstado = e.target.closest("[data-set-status]");
-      if (botonEstado) {
-        e.preventDefault();
-        actualizarEstado(botonEstado.dataset.statusCode, botonEstado.dataset.setStatus);
-        return;
-      }
       const botonCopiar = e.target.closest("[data-copy-code]");
       if (botonCopiar) {
         e.preventDefault();
