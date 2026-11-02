@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080807">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <!-- CELEA: iconos y apertura como app web -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="CR7">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  
+  
+  <title>CR7 · Centro de Convocados | CELEA Studio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f7f3ed;
+      --card: rgba(255,255,255,.82);
+      --ink: #23301f;
+      --text: #4d514b;
+      --muted: #8e918b;
+      --sage: #7d916d;
+      --sage-dark: #526746;
+      --sage-soft: #e8eee3;
+      --green: #67a751;
+      --amber: #d99542;
+      --rose: #b9837b;
+      --rose-soft: #f4e8e4;
+      --line: rgba(47,56,43,.10);
+      --shadow: 0 18px 45px rgba(44, 50, 38, .08);
+      --radius: 26px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "DM Sans", sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(221,231,213,.72), transparent 32%),
+        radial-gradient(circle at 92% 4%, rgba(242,224,218,.62), transparent 28%),
+        var(--bg);
+      color: var(--ink);
+    }
+
+    button, input { font: inherit; }
+
+    .hidden { display: none !important; }
+
+    .login-screen {
+      min-height: 100vh;
+      padding: 32px 22px;
+      display: grid;
+      place-items: center;
+    }
+
+    .login-card {
+      width: min(100%, 430px);
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,.85);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      padding: 38px 28px 30px;
+      text-align: center;
+    }
+
+    .monogram {
+      font-family: "Playfair Display", serif;
+      font-size: 30px;
+      letter-spacing: .04em;
+      color: var(--sage-dark);
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--sage-dark);
+      background: var(--sage-soft);
+      border-radius: 999px;
+      padding: 9px 13px;
+    }
+
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(38px, 10vw, 56px);
+      line-height: 1;
+      margin: 22px 0 14px;
+      font-weight: 600;
+    }
+
+    .login-copy {
+      color: var(--text);
+      line-height: 1.55;
+      margin: 0 auto 26px;
+      max-width: 320px;
+    }
+
+    .pin-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    #pinInput {
+      width: 170px;
+      height: 58px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
+      text-align: center;
+      font-size: 25px;
+      font-weight: 700;
+      letter-spacing: .3em;
+      padding-left: .3em;
+      outline: none;
+      transition: .2s ease;
+    }
+
+    #pinInput:focus {
+      border-color: var(--sage);
+      box-shadow: 0 0 0 4px rgba(125,145,109,.13);
+    }
+
+    .primary-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 17px;
+      background: var(--ink);
+      color: white;
+      padding: 16px 20px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .18s ease, opacity .18s ease;
+    }
+
+    .primary-btn:active { transform: scale(.985); }
+    .primary-btn:disabled { opacity: .55; cursor: wait; }
+
+    .login-error {
+      min-height: 22px;
+      margin: 12px 0 0;
+      color: #a45249;
+      font-size: 13px;
+    }
+
+    .app {
+      min-height: 100vh;
+      padding-bottom: 50px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: calc(16px + env(safe-area-inset-top)) 20px 16px;
+      background: rgba(247,243,237,.78);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      font-family: "Playfair Display", serif;
+      font-size: 24px;
+      color: var(--sage-dark);
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.72);
+      color: var(--ink);
+      border-radius: 14px;
+      min-width: 42px;
+      height: 42px;
+      padding: 0 13px;
+      cursor: pointer;
+    }
+
+    .container {
+      width: min(100% - 32px, 900px);
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 46px 0 24px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      margin: 10px 0 9px;
+      font-size: clamp(46px, 8vw, 68px);
+    }
+
+    .hero p {
+      margin: 0 auto;
+      color: var(--text);
+      max-width: 560px;
+      line-height: 1.55;
+    }
+
+    .live-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      color: var(--sage-dark);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #62ad52;
+      box-shadow: 0 0 0 5px rgba(98,173,82,.12);
+    }
+
+    .overview-card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      padding: 26px;
+      margin-bottom: 18px;
+    }
+
+    .attendance-number {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .attendance-number strong {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(58px, 14vw, 88px);
+      line-height: .95;
+      font-weight: 600;
+    }
+
+    .attendance-number span {
+      color: var(--text);
+      font-size: 18px;
+    }
+
+    .progress {
+      height: 12px;
+      background: #e9e7e2;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 18px 0 12px;
+    }
+
+    .progress > span {
+      display: block;
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #7cab69, #5f9651);
+      transition: width .6s ease;
+    }
+
+    .progress-caption {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .stat-card {
+      position: relative;
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: 22px;
+      background: var(--card);
+      box-shadow: 0 12px 28px rgba(44,50,38,.06);
+      padding: 20px 18px;
+      text-align: left;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      color: inherit;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px rgba(44,50,38,.09);
+    }
+
+    .stat-card.active {
+      border-color: rgba(82,103,70,.28);
+      box-shadow: 0 0 0 3px rgba(125,145,109,.10), 0 16px 34px rgba(44,50,38,.08);
+    }
+
+    .stat-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .stat-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 4px;
+    }
+
+    .stat-arrow {
+      color: var(--muted);
+      font-size: 20px;
+    }
+
+    .stat-value {
+      display: block;
+      font-family: "Playfair Display", serif;
+      font-size: 42px;
+      line-height: 1;
+      margin-bottom: 7px;
+    }
+
+    .stat-label {
+      display: block;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .stat-sub {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .confirmed .stat-dot { background: var(--green); }
+    .pending .stat-dot { background: var(--amber); }
+    .declined .stat-dot { background: var(--rose); }
+
+    .secondary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .mini-card {
+      background: rgba(255,255,255,.64);
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .mini-value {
+      font-family: "Playfair Display", serif;
+      font-size: 34px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .mini-label {
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .list-section {
+      margin-top: 22px;
+      scroll-margin-top: 85px;
+    }
+
+    .list-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .list-title {
+      font-family: "Playfair Display", serif;
+      font-size: 30px;
+      margin: 0;
+    }
+
+    .list-count {
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .guest-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .guest {
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: 18px;
+      padding: 17px 18px;
+      box-shadow: 0 8px 20px rgba(44,50,38,.045);
+    }
+
+    .guest-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .guest-name {
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    .guest-meta {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .guest-badge {
+      flex: 0 0 auto;
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--sage-soft);
+      color: var(--sage-dark);
+    }
+
+    .guest-top-actions {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .copy-invite-btn {
+      border: 1px solid rgba(82,103,70,.16);
+      background: var(--sage-soft);
+      color: var(--sage-dark);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform .16s ease, background .16s ease, opacity .16s ease;
+    }
+
+    .copy-invite-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .copy-invite-btn.copied {
+      opacity: .78;
+    }
+
+    .guest-extra {
+      display: grid;
+      gap: 6px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 32px 20px;
+      background: rgba(255,255,255,.55);
+      border-radius: 18px;
+      border: 1px dashed rgba(82,103,70,.18);
+    }
+
+    .update-bar {
+      margin-top: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 15px 17px;
+      border: 1px solid rgba(82,103,70,.12);
+      background: rgba(232,238,227,.55);
+      border-radius: 17px;
+      color: var(--sage-dark);
+      font-size: 12px;
+    }
+
+    .loading {
+      /* La actualización ocurre en segundo plano sin bloquear el panel. */
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 50;
+      left: 50%;
+      bottom: calc(24px + env(safe-area-inset-bottom));
+      transform: translate(-50%, 30px);
+      background: #263023;
+      color: white;
+      padding: 12px 16px;
+      border-radius: 14px;
+      box-shadow: 0 16px 35px rgba(0,0,0,.18);
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s ease;
+      max-width: calc(100% - 32px);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+
+    @media (max-width: 520px) {
+      .guest-top {
+        gap: 10px;
+      }
+
+      .guest-top-actions {
+        gap: 6px;
+      }
+
+      .copy-invite-btn {
+        padding: 7px 9px;
+        font-size: 9px;
+        letter-spacing: .055em;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .stat-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-card {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        column-gap: 14px;
+        padding: 17px 18px;
+      }
+
+      .stat-top {
+        margin: 0;
+        display: block;
+      }
+
+      .stat-arrow {
+        grid-column: 3;
+        grid-row: 1;
+      }
+
+      .stat-value {
+        font-size: 34px;
+        margin: 0;
+      }
+
+      .stat-copy {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      .stat-top {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .stat-card .stat-value {
+        display: none;
+      }
+
+      .stat-copy::before {
+        content: attr(data-count);
+        display: block;
+        font-family: "Playfair Display", serif;
+        font-size: 32px;
+        line-height: 1;
+        margin-bottom: 4px;
+      }
+
+      .secondary-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .overview-card {
+        padding: 22px 19px;
+      }
+
+      .hero {
+        padding-top: 32px;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .secondary-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .celea-signature {
+      display: block;
+      width: max-content;
+      max-width: calc(100% - 40px);
+      margin: 16px auto 0;
+      text-decoration: none;
+      text-align: center;
+      color: rgba(35,48,31,.60);
+      opacity: .95;
+      transition: opacity .18s ease, color .18s ease, transform .18s ease;
+      line-height: 1.2;
+    }
+
+    .celea-signature .designed-by {
+      font-family: "DM Sans", sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-right: 5px;
+    }
+
+    .celea-signature .celea-name {
+      font-family: "Playfair Display", serif;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: .025em;
+      font-style: italic;
+    }
+
+    .celea-signature:hover,
+    .celea-signature:focus-visible {
+      color: var(--sage-dark);
+      opacity: 1;
+      transform: translateY(-1px);
+    }
+
+    .dashboard-signature {
+      margin-top: 18px;
+      margin-bottom: 8px;
+    }
+
+    .export-row {
+      display: flex;
+      justify-content: center;
+      margin: 8px 0 18px;
+    }
+
+    .export-btn {
+      border: 1px solid var(--line);
+      background: var(--sage-dark);
+      color: #fff;
+      border-radius: 16px;
+      padding: 13px 18px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(44,50,38,.08);
+      transition: transform .18s ease, opacity .18s ease;
+    }
+
+    .export-btn:active { transform: scale(.985); }
+    .export-btn:disabled { opacity: .55; cursor: wait; }
+
+
+    .celea-loader { position:fixed; inset:0; z-index:9999; display:grid; place-items:center; background:var(--bg); padding:24px; text-align:center; }
+    .celea-loader img { width:150px; height:150px; border-radius:28px; display:block; margin:0 auto 24px; }
+    .celea-loader h2 { font:500 25px "Playfair Display",serif; letter-spacing:.3em; color:var(--sage-dark); margin:0 0 20px; }
+    .celea-loader p { color:var(--text); font-size:15px; line-height:1.6; max-width:300px; }
+    .loader-dots { display:flex; gap:9px; justify-content:center; margin:24px 0; }
+    .loader-dots span { width:8px; height:8px; border-radius:50%; background:var(--rose); animation:celeaPulse 1.3s ease-in-out infinite; }
+    .loader-dots span:nth-child(2) { animation-delay:.18s; background:var(--sage); }
+    .loader-dots span:nth-child(3) { animation-delay:.36s; }
+    @keyframes celeaPulse { 0%,100% { opacity:.35; transform:translateY(0); } 50% { opacity:1; transform:translateY(-5px); } }
+    .sort-row { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:0 0 18px; }
+    .sort-row label { color:var(--text); font-size:14px; }
+    .sort-row select { font:inherit; font-size:14px; padding:12px; color:var(--ink); background:var(--card); border:1px solid var(--line); border-radius:12px; max-width:100%; }
+    .sort-hint { width:100%; margin:0; color:var(--muted); font-size:12px; }
+    .refresh-status { color:var(--text); font-size:12px; align-self:center; }
+    @media (prefers-reduced-motion:reduce) { .loader-dots span { animation:none; } }
+
+    .cr7-loader-logo { font: 600 48px "Playfair Display",serif; letter-spacing:.06em; color:var(--sage-dark); margin-bottom:24px; }
+    /* CELEA · administración de invitados. Mantiene la línea visual existente. */
+    .admin-row { display:flex; justify-content:center; margin:0 0 18px; }
+    .admin-add-btn {
+      border:1px solid var(--line); background:rgba(255,255,255,.72); color:var(--sage-dark);
+      border-radius:16px; padding:12px 17px; font-size:12px; font-weight:700;
+      letter-spacing:.04em; cursor:pointer; box-shadow:0 10px 24px rgba(44,50,38,.05);
+    }
+    .delete-invite-btn {
+      border:1px solid rgba(185,131,123,.22); background:var(--rose-soft); color:#8c5e57;
+      border-radius:999px; padding:8px 10px; font-size:10px; font-weight:700;
+      cursor:pointer; transition:transform .16s ease, opacity .16s ease;
+    }
+    .delete-invite-btn:hover { transform:translateY(-1px); }
+    .admin-modal {
+      position:fixed; inset:0; z-index:10000; display:grid; place-items:center;
+      padding:22px; background:rgba(35,48,31,.34); backdrop-filter:blur(7px);
+    }
+    .admin-modal-card {
+      width:min(100%,430px); background:var(--bg); border:1px solid rgba(255,255,255,.9);
+      border-radius:28px; box-shadow:0 24px 70px rgba(35,48,31,.18); padding:26px;
+    }
+    .admin-modal-head { display:flex; justify-content:space-between; gap:16px; align-items:center; margin-bottom:20px; }
+    .admin-modal-title { font-family:"Playfair Display",serif; font-size:28px; margin:0; color:var(--ink); }
+    .admin-close-btn { border:0; background:transparent; color:var(--muted); font-size:25px; cursor:pointer; padding:2px 6px; }
+    .admin-field { display:grid; gap:7px; margin-bottom:14px; }
+    .admin-field label { color:var(--text); font-size:12px; font-weight:700; }
+    .admin-field input {
+      width:100%; border:1px solid var(--line); background:#fff; color:var(--ink);
+      border-radius:14px; padding:13px 14px; outline:none;
+    }
+    .admin-field input:focus { border-color:var(--sage); box-shadow:0 0 0 4px rgba(125,145,109,.11); }
+    .admin-modal-actions { display:flex; gap:10px; margin-top:20px; }
+    .admin-modal-actions .primary-btn { flex:1; }
+    .admin-cancel-btn {
+      border:1px solid var(--line); background:rgba(255,255,255,.72); color:var(--text);
+      border-radius:17px; padding:14px 18px; font-weight:700; cursor:pointer;
+    }
+    @media (max-width:520px) {
+      .guest-top-actions { flex-wrap:wrap; justify-content:flex-end; }
+      .delete-invite-btn { padding:7px 9px; font-size:9px; }
+    }
+
+    /* CR7 • Edición Black & Gold • Paleta de la invitación original */
+    :root {
+      color-scheme: dark;
+      --bg:#080807; --card:rgba(26,22,16,.91);
+      --ink:#fff7e9; --text:#ddd0b7; --muted:#a99b84;
+      --sage:#e7c889; --sage-dark:#e7c889; --sage-soft:rgba(231,200,137,.12);
+      --green:#d7b97c; --amber:#d8ae63; --rose:#af8169;
+      --rose-soft:rgba(175,129,105,.17);
+      --line:rgba(231,200,137,.21);
+      --shadow:0 18px 45px rgba(0,0,0,.42);
+    }
+    body {
+      background:radial-gradient(ellipse at 50% -12%,rgba(111,78,30,.30),transparent 52%),
+                 radial-gradient(circle at 100% 55%,rgba(86,58,21,.13),transparent 45%),
+                 #080807;
+      color:var(--ink);
+    }
+    h1,.monogram,.brand,.attendance-number strong,.stat-value,.stat-copy::before,.mini-value,.list-title,.admin-modal-title,.celea-signature .celea-name {font-family:Georgia,'Times New Roman',serif;}
+    h1,.hero h1 {color:var(--ink);letter-spacing:.045em;}
+    .login-screen {background:radial-gradient(ellipse at center,rgba(120,78,27,.19),transparent 65%);}
+    .login-card,.overview-card,.stat-card,.mini-card,.guest,.admin-modal-card {
+      background:linear-gradient(145deg,rgba(48,37,22,.90),rgba(15,14,12,.97));
+      border:1px solid rgba(231,200,137,.23);
+      box-shadow:var(--shadow);
+    }
+    .login-card {border-radius:24px;position:relative;overflow:hidden;}
+    .login-card::before {content:'';position:absolute;top:0;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,#e7c889,transparent);}
+    .monogram {font-size:48px;font-weight:700;letter-spacing:.14em;color:#e7c889;text-shadow:0 0 35px rgba(231,200,137,.23);}
+    .eyebrow,.guest-badge {color:#e7c889;background:rgba(231,200,137,.10);border:1px solid rgba(231,200,137,.24);letter-spacing:.16em;}
+    .primary-btn,.export-btn {color:#080807;background:linear-gradient(115deg,#cda969,#f1d99b,#d8ae63);border:1px solid #e7c889;box-shadow:0 10px 35px rgba(216,174,99,.17);}
+    .primary-btn:hover,.export-btn:hover {filter:brightness(1.07);}
+    #pinInput,.admin-field input,.sort-row select {background:#17140f!important;color:#fff7e9!important;border:1px solid rgba(231,200,137,.35)!important;}
+    #pinInput:focus,.admin-field input:focus {border-color:#e7c889!important;box-shadow:0 0 0 4px rgba(231,200,137,.12)!important;}
+    .topbar {background:rgba(8,8,7,.88);border-bottom:1px solid rgba(231,200,137,.23);}
+    .brand {color:#e7c889;letter-spacing:.08em;font-weight:700;}
+    .icon-btn,.admin-add-btn,.admin-cancel-btn {background:rgba(231,200,137,.09);border:1px solid rgba(231,200,137,.27);color:#e7c889;}
+    .hero {background:radial-gradient(ellipse at 50% 5%,rgba(156,112,47,.18),transparent 65%);}
+    .hero .eyebrow {letter-spacing:.28em;}
+    .live-pill,.refresh-status,.celea-signature {color:#cda969;}
+    .dot {background:#e7c889;box-shadow:0 0 0 5px rgba(231,200,137,.11),0 0 16px rgba(231,200,137,.5);}
+    .progress {background:rgba(231,200,137,.12);}
+    .progress > span {background:linear-gradient(90deg,#9e773e,#e7c889,#f4dfaf);}
+    .stat-card.active {border-color:#e7c889;box-shadow:0 0 0 2px rgba(231,200,137,.15),var(--shadow);}
+    .stat-card:hover {border-color:rgba(231,200,137,.5);box-shadow:0 16px 38px rgba(0,0,0,.44);}
+    .confirmed .stat-dot {background:#e7c889;} .pending .stat-dot {background:#b99b63;} .declined .stat-dot {background:#8d6c5d;}
+    .guest {border-color:rgba(231,200,137,.15);}
+    .copy-invite-btn,.delete-invite-btn {background:rgba(231,200,137,.09);border:1px solid rgba(231,200,137,.3);color:#e7c889;}
+    .update-bar {background:rgba(231,200,137,.07);border-color:rgba(231,200,137,.19);color:#cda969;}
+    .celea-loader {background:#080807;} .cr7-loader-logo,.celea-loader h2 {color:#e7c889;}
+    .admin-modal {background:rgba(0,0,0,.77);}
+    .admin-modal-card {background:#17130f;border-color:rgba(231,200,137,.32);}
+    .login-error {color:#e3a29a;}
+    .empty {background:rgba(231,200,137,.045);border-color:rgba(231,200,137,.25);}
+    .toast {background:#302619;border:1px solid rgba(231,200,137,.4);color:#fff7e9;}
+    .celea-signature .designed-by {color:#ac9b7e;}
+    ::selection {background:#e7c889;color:#080807;}
+
+
+    /* CR7 custom layout · Black Gold Stadium */
+    .login-card {max-width:470px;padding:48px 34px 38px;background:linear-gradient(155deg,#272014,#0c0b09 72%)}
+    .login-card .monogram{font-family:Impact,'Arial Black',sans-serif;font-size:88px;line-height:1;letter-spacing:-.055em;font-style:italic;margin:8px 0 22px}
+    .login-card h1{font-family:Georgia,serif;font-size:clamp(37px,7vw,52px);line-height:1.07;letter-spacing:-.04em}
+    .login-card .eyebrow{font-size:10px;letter-spacing:.2em}
+    .topbar{padding-top:18px;padding-bottom:18px}
+    .brand{font:italic 900 30px/1 Impact,'Arial Black',sans-serif;letter-spacing:-.02em}
+    .hero{position:relative;text-align:left;padding:52px 0 36px;background:transparent}
+    .hero>.eyebrow{font-size:10px}
+    .hero-lockup{display:grid;grid-template-columns:130px minmax(0,1fr);gap:34px;align-items:center;margin-top:22px}
+    .hero-seven{font:italic 900 clamp(150px,20vw,230px)/.8 Impact,'Arial Black',sans-serif;color:#e7c889;letter-spacing:-.12em;text-shadow:0 5px 50px rgba(231,200,137,.19);transform:skew(-5deg)}
+    .hero-kicker{font:700 11px 'DM Sans',sans-serif;color:#e7c889!important;letter-spacing:.22em;margin:0 0 13px!important}
+    .hero h1{font:500 clamp(42px,6.5vw,76px)/.99 Georgia,serif;letter-spacing:-.055em;margin:0 0 15px}
+    .hero-lockup p:not(.hero-kicker){max-width:550px;line-height:1.7;font-size:15px}
+    .gold-dot{color:#e7c889}
+    .overview-card{padding:32px 34px;border-radius:18px}
+    .stat-card,.mini-card,.guest{border-radius:15px}
+    .stat-label{font-size:13px}
+    .squad-actions{border-top:1px solid var(--line);margin-top:15px;padding-top:14px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+    .squad-actions span{font-size:10px;letter-spacing:.14em;font-weight:700;color:#a99b84;margin-right:4px}
+    .squad-actions button{cursor:pointer;border:1px solid rgba(231,200,137,.24);border-radius:8px;padding:8px 10px;background:rgba(231,200,137,.05);color:#dac9a6;font-size:11px}
+    .squad-actions button[aria-current="true"]{background:#e7c889;color:#080807;font-weight:700}
+    .squad-actions button:hover{border-color:#e7c889}
+    .guest-name{color:#fff7e9}
+    @media(max-width:650px){.hero{padding-top:36px}.hero-lockup{grid-template-columns:75px 1fr;gap:20px}.hero-seven{font-size:130px}.hero h1{font-size:clamp(35px,8vw,54px)}.hero-kicker{font-size:9px}.overview-card{padding:23px}.hero-lockup p:not(.hero-kicker){font-size:13px}}
+
+  </style>
+</head>
+
+<body>
+  <div class="celea-loader hidden" id="celeaLoader" role="status" aria-live="polite">
+    <div><div class="cr7-loader-logo">CR7</div>
+    <h2>CELEA</h2><p>Preparando los detalles de tu celebración…</p>
+    <div class="loader-dots" aria-hidden="true"><span></span><span></span><span></span></div></div>
+  </div>
+  <section class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <div class="monogram">CR7</div>
+      <span class="eyebrow">ACCESO DE DIRECTOR TÉCNICO</span>
+      <h1>La convocatoria</h1>
+      <p class="login-copy">Solo los seleccionados entran al equipo. Gestiona la lista oficial de invitados.</p>
+
+      <form id="loginForm" autocomplete="off">
+        <div class="pin-wrap">
+          <input
+            id="pinInput"
+            type="password"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            maxlength="8"
+            placeholder="••••"
+            aria-label="PIN privado"
+            required>
+        </div>
+
+        <button class="primary-btn" id="loginBtn" type="submit">Ingresar</button>
+        <p class="login-error" id="loginError"></p>
+      </form>
+    </div>
+    <a class="celea-signature" href="https://bycelea.com/" target="_blank" rel="noopener noreferrer" aria-label="Visitar by.celea"><span class="designed-by">Designed by.</span><span class="celea-name">Celea Studio</span></a>
+  </section>
+
+  <main class="app hidden" id="dashboard">
+    <header class="topbar">
+      <div class="brand">CR7</div>
+
+      <div class="top-actions">
+        <span class="refresh-status hidden" id="refreshStatus" role="status">Actualizando…</span>
+        <button class="icon-btn" id="refreshBtn" type="button" aria-label="Actualizar" title="Actualizar">↻</button>
+        <button class="icon-btn" id="logoutBtn" type="button">Salir</button>
+      </div>
+    </header>
+
+    <div class="container">
+      <section class="hero">
+        <span class="eyebrow">EDICIÓN ESPECIAL · CR7</span>
+        <div class="hero-lockup"><div class="hero-seven" aria-hidden="true">7</div><div><p class="hero-kicker">EL PARTIDO MÁS IMPORTANTE</p><h1>Centro de<br>convocados<span class="gold-dot">.</span></h1><p>El once ideal empieza con una gran lista. Gestiona aquí las confirmaciones de la celebración.</p><div class="live-pill"><span class="dot"></span> Panel de gestión</div></div></div>
+      </section>
+
+      <section class="overview-card">
+        <div class="attendance-number">
+          <strong id="totalAsisten">0</strong>
+          <span>jugadores en la lista</span>
+        </div>
+
+        <div class="progress">
+          <span id="progressFill"></span>
+        </div>
+
+        <div class="progress-caption">
+          <span id="progressText">0% de invitaciones respondidas</span>
+          <span id="totalCupos">0 cupos totales</span>
+        </div>
+      </section>
+
+      <section class="stat-grid" aria-label="Estados de confirmación">
+        <button class="stat-card confirmed active" data-list="confirmados" type="button">
+          <div class="stat-top"><span class="stat-dot"></span></div>
+          <span class="stat-value" id="confirmedValue">0</span>
+          <div class="stat-copy" id="confirmedCopy" data-count="0">
+            <span class="stat-label">Titulares confirmados</span>
+            <span class="stat-sub">Toca para ver la lista</span>
+          </div>
+          <span class="stat-arrow">›</span>
+        </button>
+
+        <button class="stat-card pending" data-list="pendientes" type="button">
+          <div class="stat-top"><span class="stat-dot"></span></div>
+          <span class="stat-value" id="pendingValue">0</span>
+          <div class="stat-copy" id="pendingCopy" data-count="0">
+            <span class="stat-label">En espera</span>
+            <span class="stat-sub">Toca para ver la lista</span>
+          </div>
+          <span class="stat-arrow">›</span>
+        </button>
+
+        <button class="stat-card declined" data-list="noAsisten" type="button">
+          <div class="stat-top"><span class="stat-dot"></span></div>
+          <span class="stat-value" id="declinedValue">0</span>
+          <div class="stat-copy" id="declinedCopy" data-count="0">
+            <span class="stat-label">Bajas</span>
+            <span class="stat-sub">Toca para ver la lista</span>
+          </div>
+          <span class="stat-arrow">›</span>
+        </button>
+      </section>
+
+      <section class="secondary-grid">
+        <div class="mini-card">
+          <span class="mini-value" id="totalInvitaciones">0</span>
+          <span class="mini-label">Convocados registrados</span>
+        </div>
+
+        <div class="mini-card">
+          <span class="mini-value" id="totalRespondidas">0</span>
+          <span class="mini-label">Respuestas recibidas</span>
+        </div>
+      </section>
+
+      <div class="export-row">
+        <button class="export-btn" id="exportExcelBtn" type="button">⇩ EXPORTAR ALINEACIÓN</button>
+      </div>
+
+      <div class="admin-row">
+        <button class="admin-add-btn" id="addGuestBtn" type="button">＋ Convocar jugador</button>
+      </div>
+
+      <section class="list-section hidden" id="listSection">
+        <div class="list-head">
+          <h2 class="list-title" id="listTitle">Confirmados</h2>
+          <span class="list-count" id="listCount">0 invitaciones</span>
+        </div>
+
+        <div class="sort-row">
+          <label for="sortOrder">Ordenar por</label>
+          <select id="sortOrder">
+            <option value="lista">Orden de lista</option>
+            <option value="recientes">Confirmación: más recientes primero</option>
+            <option value="antiguas">Confirmación: más antiguas primero</option>
+          </select>
+          <p class="sort-hint" id="sortHint"></p>
+        </div>
+        <div class="guest-list" id="guestList"></div>
+      </section>
+
+      <div class="update-bar">
+        <span>Versión de prueba: los datos se guardan solo en este navegador.</span>
+        <span id="updatedText">Actualizando…</span>
+      </div>
+
+      <a class="celea-signature dashboard-signature" href="https://bycelea.com/" target="_blank" rel="noopener noreferrer" aria-label="Visitar by.celea"><span class="designed-by">Designed by.</span><span class="celea-name">Celea Studio</span></a>
+    </div>
+  </main>
+
+  <div class="admin-modal hidden" id="guestModal" role="dialog" aria-modal="true" aria-labelledby="guestModalTitle">
+    <form class="admin-modal-card" id="guestForm" autocomplete="off">
+      <div class="admin-modal-head">
+        <h2 class="admin-modal-title" id="guestModalTitle">Nuevo convocado</h2>
+        <button class="admin-close-btn" id="closeGuestModalBtn" type="button" aria-label="Cerrar">×</button>
+      </div>
+
+      <div class="admin-field">
+        <label for="guestNameInput">Nombre del convocado</label>
+        <input id="guestNameInput" type="text" maxlength="120" required>
+      </div>
+
+      <div class="admin-field">
+        <label for="guestCodeInput">Código de invitación</label>
+        <input id="guestCodeInput" type="text" maxlength="80" autocapitalize="none" spellcheck="false" required>
+      </div>
+
+      <div class="admin-field">
+        <label for="guestSeatsInput">Cupos</label>
+        <input id="guestSeatsInput" type="number" min="1" max="20" value="1" required>
+      </div>
+
+      <div class="admin-modal-actions">
+        <button class="admin-cancel-btn" id="cancelGuestBtn" type="button">Cancelar</button>
+        <button class="primary-btn" id="saveGuestBtn" type="submit">Agregar</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script>
+    // DEMO LOCAL: No está conectado a una base de datos o RSVP público.
+    const INVITATION_BASE_URL = "";
+    const DB_KEY = "cr7_invitados_demo_v1";
+    const PANEL_PIN = "0711";
+    const TOKEN_KEY = "cr7_panel_token";
+    const EXPIRY_KEY = "cr7_panel_expiry";
+
+    let resumenActual = null;
+    let listaActiva = "confirmados";
+    let refreshTimer = null;
+    let resumenEnCurso = false;
+    let ordenLista = "lista";
+    try { ordenLista = localStorage.getItem("cr7_panel_orden") || "lista"; } catch (_) {}
+    if (!["lista", "recientes", "antiguas"].includes(ordenLista)) ordenLista = "lista";
+
+    function mostrarCarga(activa) {
+      $("celeaLoader").classList.toggle("hidden", !activa);
+      $("dashboard").setAttribute("aria-busy", String(activa));
+    }
+
+    function fechaParaOrdenar(valor) {
+      if (typeof valor !== "string" || !valor.trim()) return null;
+      const texto = valor.trim();
+      // Fechas locales recibidas por Apps Script: día/mes/año, con hora opcional.
+      const m = texto.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})(?:[,\s]+(\d{1,2}):(\d{2})(?::(\d{2}))?(?:\s*([ap])\.?\s*m\.?)?)?$/i);
+      if (m) {
+        let h = Number(m[4] || 0);
+        const min = Number(m[5] || 0), sec = Number(m[6] || 0);
+        if (m[7]) { if (h < 1 || h > 12) return null; h = h % 12 + (m[7].toLowerCase() === "p" ? 12 : 0); }
+        if (h > 23 || min > 59 || sec > 59) return null;
+        // La hora local de las respuestas corresponde a Ecuador (UTC-5).
+        const d = new Date(Date.UTC(+m[3], +m[2]-1, +m[1], h, min, sec));
+        if (d.getUTCFullYear() !== +m[3] || d.getUTCMonth() !== +m[2]-1 || d.getUTCDate() !== +m[1]) return null;
+        return d.getTime() + 5 * 3600000;
+      }
+      if (/^\d{4}-\d{2}-\d{2}T/.test(texto)) {
+        const zona = /(?:Z|[+-]\d{2}:?\d{2})$/i.test(texto) ? texto : texto + "-05:00";
+        const t = Date.parse(zona);
+        return Number.isFinite(t) ? t : null;
+      }
+      return null;
+    }
+
+
+    function formatearFechaRespuesta(valor) {
+      if (!valor) return "";
+
+      const texto = String(valor).trim();
+
+      if (/^\d{4}-\d{2}-\d{2}T/.test(texto)) {
+        const fecha = new Date(texto);
+        if (!Number.isNaN(fecha.getTime())) {
+          const partes = new Intl.DateTimeFormat("es-EC", {
+            timeZone: "America/Guayaquil",
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false
+          }).formatToParts(fecha);
+
+          const valorDe = tipo => partes.find(p => p.type === tipo)?.value || "";
+          return `${valorDe("day")}/${valorDe("month")}/${valorDe("year")} ${valorDe("hour")}:${valorDe("minute")}`;
+        }
+      }
+
+      return texto;
+    }
+
+    function ordenarInvitados(datos, tipo, orden = ordenLista) {
+      if (orden === "lista" || tipo === "pendientes") return datos.slice();
+      return datos.map((item, i) => ({item, i, fecha:fechaParaOrdenar(item.fechaRespuesta)}))
+        .sort((a,b) => {
+          if (a.fecha === null && b.fecha === null) return a.i-b.i;
+          if (a.fecha === null) return 1;
+          if (b.fecha === null) return -1;
+          return (orden === "antiguas" ? a.fecha-b.fecha : b.fecha-a.fecha) || a.i-b.i;
+        }).map(x => x.item);
+    }
+
+    const AUSENCIA_MAX_MS = 5 * 60 * 1000;
+    let momentoOculto = null;
+
+    function cerrarSesionPorAusencia() {
+      limpiarSesion();
+      mostrarLogin();
+      clearInterval(refreshTimer);
+      momentoOculto = null;
+      mostrarLogin();
+      $("loginError").textContent = "Por seguridad, vuelve a ingresar tu PIN.";
+    }
+
+    const $ = (id) => document.getElementById(id);
+
+    function obtenerInvitados() {
+      try { return JSON.parse(localStorage.getItem(DB_KEY) || "[]"); }
+      catch (_) { return []; }
+    }
+
+    function guardarInvitados(items) {
+      localStorage.setItem(DB_KEY, JSON.stringify(items));
+    }
+
+    // Adaptador local para probar el diseño sin tocar la boda de Nicole y Pablo.
+    // Para uso real hay que sustituirlo por una API con acceso autorizado en servidor.
+    async function supabaseRpc(funcion, parametros = {}) {
+      const token = obtenerToken();
+      if (funcion === "panel_login") {
+        if (parametros.p_pin !== PANEL_PIN) return {ok:false, mensaje:"PIN incorrecto."};
+        return {ok:true, token:"cr7-demo-session", duracionSegundos:28800};
+      }
+      if (funcion === "panel_logout") return {ok:true};
+      if (!token || parametros.p_token !== token) return {ok:false, codigoError:"SESION_INVALIDA"};
+      let items = obtenerInvitados();
+      if (funcion === "panel_agregar_invitado") {
+        const codigo = String(parametros.p_codigo || "").trim();
+        if (items.some(i => i.codigo.toLowerCase() === codigo.toLowerCase())) return {ok:false, mensaje:"Ese código ya existe."};
+        items.push({invitado:parametros.p_nombre, codigo, cupos:parametros.p_cupos, asisten:0, estado:"pendientes", fechaRespuesta:"", acompanantes:"", notaRegalo:""});
+        guardarInvitados(items);
+        return {ok:true, mensaje:"Invitado agregado en este navegador."};
+      }
+      if (funcion === "panel_eliminar_invitado") {
+        items = items.filter(i => i.codigo !== parametros.p_codigo);
+        guardarInvitados(items);
+        return {ok:true, mensaje:"Invitado eliminado de este navegador."};
+      }
+      if (funcion === "panel_resumen") {
+        const confirmados = items.filter(i => i.estado === "confirmados");
+        const pendientes = items.filter(i => i.estado === "pendientes");
+        const noAsisten = items.filter(i => i.estado === "noAsisten");
+        return {ok:true, actualizado:new Date().toISOString(),
+          totales:{confirmados:confirmados.length, pendientes:pendientes.length, noAsisten:noAsisten.length,
+            invitaciones:items.length, cupos:items.reduce((n,i)=>n+Number(i.cupos||0),0),
+            personasAsisten:confirmados.reduce((n,i)=>n+Number(i.asisten||0),0)},
+          listas:{confirmados, pendientes, noAsisten}};
+      }
+      return {ok:false, mensaje:"Operación no disponible."};
+    }
+
+    function guardarSesion(token, segundos) {
+      localStorage.setItem(TOKEN_KEY, token);
+      localStorage.setItem(EXPIRY_KEY, String(Date.now() + (segundos * 1000)));
+    }
+
+    function obtenerToken() {
+      const token = localStorage.getItem(TOKEN_KEY);
+      const expiry = Number(localStorage.getItem(EXPIRY_KEY) || 0);
+
+      if (!token || !expiry || Date.now() >= expiry) {
+        limpiarSesion();
+        return "";
+      }
+
+      return token;
+    }
+
+    function limpiarSesion() {
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(EXPIRY_KEY);
+    }
+
+    function mostrarLogin() {
+      mostrarCarga(false);
+      resumenActual = null;
+      $("dashboard").classList.add("hidden");
+      $("loginScreen").classList.remove("hidden");
+      $("listSection").classList.add("hidden");
+      $("pinInput").value = "";
+      setTimeout(() => $("pinInput").focus(), 80);
+    }
+
+    function mostrarDashboard() {
+      $("loginScreen").classList.add("hidden");
+      $("dashboard").classList.remove("hidden");
+      $("listSection").classList.add("hidden");
+    }
+
+    function toast(mensaje) {
+      const el = $("toast");
+      el.textContent = mensaje;
+      el.classList.add("show");
+      clearTimeout(el._timer);
+      el._timer = setTimeout(() => el.classList.remove("show"), 2600);
+    }
+
+    async function login(pin) {
+      mostrarCarga(true);
+      $("loginBtn").disabled = true;
+      $("loginBtn").textContent = "Ingresando…";
+      $("loginError").textContent = "";
+
+      try {
+        const data = await supabaseRpc("panel_login", {
+          p_pin: pin
+        });
+
+        if (!data.ok) {
+          $("loginError").textContent = data.mensaje || "PIN incorrecto.";
+          return;
+        }
+
+        guardarSesion(data.token, Number(data.duracionSegundos) || 28800);
+        mostrarDashboard();
+        await cargarResumen(false);
+        iniciarAutoRefresh();
+
+      } catch (error) {
+        $("loginError").textContent = error.message || "No se pudo ingresar.";
+      } finally {
+        mostrarCarga(false);
+        $("loginBtn").disabled = false;
+        $("loginBtn").textContent = "Ingresar";
+      }
+    }
+
+    async function cargarResumen(mostrarAviso = true) {
+      const token = obtenerToken();
+
+      if (!token) {
+        mostrarLogin();
+        return;
+      }
+
+      if (resumenEnCurso) return;
+      resumenEnCurso = true;
+      const primeraCarga = !resumenActual;
+      if (primeraCarga) mostrarCarga(true);
+      else $("refreshStatus").classList.remove("hidden");
+      $("refreshBtn").disabled = true;
+
+      try {
+        const data = await supabaseRpc("panel_resumen", {
+          p_token: token
+        });
+
+        if (token !== obtenerToken()) return;
+
+        if (!data.ok) {
+          if (data.codigoError === "SESION_INVALIDA") {
+            limpiarSesion();
+            mostrarLogin();
+            toast("La sesión venció. Ingresa nuevamente.");
+            return;
+          }
+
+          throw new Error(data.mensaje || "No se pudo cargar el resumen.");
+        }
+
+        resumenActual = data;
+        renderResumen();
+
+        if (mostrarAviso) {
+          toast("Resumen actualizado");
+        }
+
+      } catch (error) {
+        toast(error.message || "No se pudo actualizar.");
+      } finally {
+        resumenEnCurso = false;
+        mostrarCarga(false);
+        $("refreshStatus").classList.add("hidden");
+        $("refreshBtn").disabled = false;
+      }
+    }
+
+    function renderResumen() {
+      if (!resumenActual) return;
+
+      const t = resumenActual.totales || {};
+
+      const confirmados = Number(t.confirmados || 0);
+      const pendientes = Number(t.pendientes || 0);
+      const noAsisten = Number(t.noAsisten || 0);
+      const respondidas = confirmados + noAsisten;
+      const total = Number(t.invitaciones || 0);
+      const porcentaje = total ? Math.round((respondidas / total) * 100) : 0;
+
+      $("totalAsisten").textContent = Number(t.personasAsisten || 0);
+      $("totalCupos").textContent = Number(t.cupos || 0) + " cupos totales";
+      $("progressFill").style.width = porcentaje + "%";
+      $("progressText").textContent = porcentaje + "% de invitaciones respondidas";
+
+      $("confirmedValue").textContent = confirmados;
+      $("pendingValue").textContent = pendientes;
+      $("declinedValue").textContent = noAsisten;
+
+      $("confirmedCopy").dataset.count = confirmados;
+      $("pendingCopy").dataset.count = pendientes;
+      $("declinedCopy").dataset.count = noAsisten;
+
+      $("totalInvitaciones").textContent = total;
+      $("totalRespondidas").textContent = respondidas;
+
+      $("updatedText").textContent = "Actualizado " + formatearHora(resumenActual.actualizado);
+      if (!$("listSection").classList.contains("hidden")) renderLista(listaActiva);
+
+    }
+
+    function obtenerAsistentesParaExportar() {
+      const confirmados = resumenActual?.listas?.confirmados || [];
+
+      return ordenarInvitados(confirmados, "confirmados").map(item => ({
+        "Código": item.codigo || "",
+        "Invitado": item.invitado || "",
+        "Cupos": Number(item.cupos || 0),
+        "Asisten": Number(item.asisten || 0),
+        "Acompañantes": item.acompanantes || "",
+        "Fecha de respuesta": formatearFechaRespuesta(item.fechaRespuesta),
+        "Nota de regalo": item.notaRegalo || ""
+      }));
+    }
+
+    function descargarCSVRespaldo(datos) {
+      const encabezados = Object.keys(datos[0] || {});
+      const escapar = valor => '"' + String(valor ?? "").replace(/"/g, '""') + '"';
+      const filas = [encabezados.map(escapar).join(",")];
+
+      datos.forEach(fila => {
+        filas.push(encabezados.map(clave => escapar(fila[clave])).join(","));
+      });
+
+      const blob = new Blob(["\ufeff" + filas.join("\r\n")], { type: "text/csv;charset=utf-8;" });
+      const enlace = document.createElement("a");
+      enlace.href = URL.createObjectURL(blob);
+      enlace.download = "CR7_Lista_de_Asistentes.csv";
+      document.body.appendChild(enlace);
+      enlace.click();
+      enlace.remove();
+      setTimeout(() => URL.revokeObjectURL(enlace.href), 1000);
+    }
+
+    function descargarListaAsistentes() {
+      if (!resumenActual) {
+        toast("Espera a que carguen los datos.");
+        return;
+      }
+
+      const datos = obtenerAsistentesParaExportar();
+
+      if (!datos.length) {
+        toast("Todavía no hay asistentes confirmados.");
+        return;
+      }
+
+      try {
+        if (!window.XLSX) {
+          descargarCSVRespaldo(datos);
+          toast("Excel no cargó; descargamos un CSV compatible.");
+          return;
+        }
+
+        const hoja = XLSX.utils.json_to_sheet(datos);
+        hoja["!cols"] = [
+          { wch: 18 }, { wch: 34 }, { wch: 10 }, { wch: 10 },
+          { wch: 38 }, { wch: 22 }, { wch: 48 }
+        ];
+        hoja["!autofilter"] = { ref: hoja["!ref"] };
+
+        const libro = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(libro, hoja, "Asistentes");
+        XLSX.writeFile(libro, "CR7_Lista_de_Asistentes.xlsx");
+        toast("Lista de asistentes descargada");
+      } catch (error) {
+        console.error(error);
+        descargarCSVRespaldo(datos);
+        toast("Descargamos una versión compatible con Excel.");
+      }
+    }
+
+    function renderLista(tipo) {
+      if (!resumenActual) return;
+
+      listaActiva = tipo;
+      $("listSection").classList.remove("hidden");
+
+      document.querySelectorAll(".stat-card").forEach(card => {
+        card.classList.toggle("active", card.dataset.list === tipo);
+      });
+
+      const config = {
+        confirmados: {
+          titulo: "Confirmados",
+          datos: resumenActual.listas?.confirmados || []
+        },
+        pendientes: {
+          titulo: "Sin responder",
+          datos: resumenActual.listas?.pendientes || []
+        },
+        noAsisten: {
+          titulo: "No asistirán",
+          datos: resumenActual.listas?.noAsisten || []
+        }
+      };
+
+      const actual = config[tipo] || config.confirmados;
+      const datosOrdenados = ordenarInvitados(actual.datos, tipo);
+      $("sortOrder").value = ordenLista;
+      $("sortOrder").disabled = tipo === "pendientes";
+      const sinFecha = actual.datos.some(item => fechaParaOrdenar(item.fechaRespuesta) === null);
+      $("sortHint").textContent = tipo === "pendientes"
+        ? "Los invitados sin responder conservan el orden de lista."
+        : ordenLista === "lista" ? "Se conserva el orden recibido de la lista."
+        : sinFecha ? "Las respuestas sin fecha reconocible aparecen al final." : "";
+
+      $("listTitle").textContent = actual.titulo;
+      $("listCount").textContent = actual.datos.length + (actual.datos.length === 1 ? " invitación" : " invitaciones");
+
+      const contenedor = $("guestList");
+
+      if (!actual.datos.length) {
+        contenedor.innerHTML = '<div class="empty">No hay invitados en esta categoría.</div>';
+        return;
+      }
+
+      contenedor.innerHTML = datosOrdenados.map(item => {
+        const cupos = Number(item.cupos || 0);
+        const asisten = Number(item.asisten || 0);
+
+        let badge = cupos + (cupos === 1 ? " cupo" : " cupos");
+
+        if (tipo === "confirmados") {
+          badge = asisten + " de " + cupos;
+        }
+
+        const extras = [];
+
+        if (tipo === "confirmados" && item.acompanantes) {
+          extras.push("<div><strong>Acompañantes:</strong> " + escapeHtml(item.acompanantes) + "</div>");
+        }
+
+        if (item.fechaRespuesta && tipo !== "pendientes") {
+          extras.push("<div><strong>Respondió:</strong> " + escapeHtml(formatearFechaRespuesta(item.fechaRespuesta)) + "</div>");
+        }
+
+        if (item.notaRegalo) {
+          extras.push("<div><strong>Nota de regalo:</strong> " + escapeHtml(item.notaRegalo) + "</div>");
+        }
+
+        return `
+          <article class="guest">
+            <div class="guest-top">
+              <div>
+                <div class="guest-name">${escapeHtml(item.invitado || "Invitado")}</div>
+                <div class="guest-meta">${escapeHtml(item.codigo || "")}</div>
+              </div>
+              <div class="guest-top-actions">
+                <button
+                  class="copy-invite-btn"
+                  type="button"
+                  data-copy-code="${escapeHtml(item.codigo || "")}"
+                  aria-label="Copiar invitación de ${escapeHtml(item.invitado || "Invitado")}">
+                  Copiar invitación
+                </button>
+                <button
+                  class="delete-invite-btn"
+                  type="button"
+                  data-delete-code="${escapeHtml(item.codigo || "")}"
+                  data-delete-name="${escapeHtml(item.invitado || "Invitado")}"
+                  aria-label="Eliminar a ${escapeHtml(item.invitado || "Invitado")}">
+                  Eliminar
+                </button>
+                <span class="guest-badge">${badge}</span>
+              </div>
+            </div>
+            ${extras.length ? '<div class="guest-extra">' + extras.join("") + '</div>' : ""}
+            <div class="squad-actions" aria-label="Actualizar asistencia">
+              <span>ESTADO</span>
+              <button type="button" data-set-status="confirmados" data-status-code="${escapeHtml(item.codigo || "")}" ${tipo === "confirmados" ? 'aria-current="true"' : ""}>✓ Titular</button>
+              <button type="button" data-set-status="pendientes" data-status-code="${escapeHtml(item.codigo || "")}" ${tipo === "pendientes" ? 'aria-current="true"' : ""}>◷ Espera</button>
+              <button type="button" data-set-status="noAsisten" data-status-code="${escapeHtml(item.codigo || "")}" ${tipo === "noAsisten" ? 'aria-current="true"' : ""}>× Baja</button>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+
+    function abrirModalInvitado() {
+      $("guestForm").reset();
+      $("guestSeatsInput").value = "1";
+      $("guestModal").classList.remove("hidden");
+      setTimeout(() => $("guestNameInput").focus(), 80);
+    }
+
+    function cerrarModalInvitado() {
+      $("guestModal").classList.add("hidden");
+    }
+
+    async function agregarInvitado() {
+      const token = obtenerToken();
+      if (!token) {
+        mostrarLogin();
+        return;
+      }
+
+      const nombre = $("guestNameInput").value.trim();
+      const codigo = $("guestCodeInput").value.trim();
+      const cupos = Number($("guestSeatsInput").value);
+
+      if (!nombre || !codigo || !Number.isInteger(cupos) || cupos < 1 || cupos > 20) {
+        toast("Revisa nombre, código y cupos.");
+        return;
+      }
+
+      $("saveGuestBtn").disabled = true;
+      $("saveGuestBtn").textContent = "Agregando…";
+
+      try {
+        const data = await supabaseRpc("panel_agregar_invitado", {
+          p_token: token,
+          p_nombre: nombre,
+          p_codigo: codigo,
+          p_cupos: cupos
+        });
+
+        if (!data?.ok) {
+          if (data?.codigoError === "SESION_INVALIDA") {
+            limpiarSesion();
+            cerrarModalInvitado();
+            mostrarLogin();
+            toast("La sesión venció. Ingresa nuevamente.");
+            return;
+          }
+          throw new Error(data?.mensaje || "No se pudo agregar el invitado.");
+        }
+
+        cerrarModalInvitado();
+        await cargarResumen(false);
+        renderLista("pendientes");
+        toast(data.mensaje || "Invitado agregado correctamente.");
+      } catch (error) {
+        toast(error.message || "No se pudo agregar el invitado.");
+      } finally {
+        $("saveGuestBtn").disabled = false;
+        $("saveGuestBtn").textContent = "Agregar";
+      }
+    }
+
+    async function eliminarInvitado(codigo, nombre, boton) {
+      const token = obtenerToken();
+      if (!token) {
+        mostrarLogin();
+        return;
+      }
+
+      const confirmado = window.confirm(
+        `¿Eliminar a ${nombre || "este invitado"}?\n\nSu invitación dejará de estar activa, pero el registro podrá recuperarse después.`
+      );
+      if (!confirmado) return;
+
+      boton.disabled = true;
+      const textoOriginal = boton.textContent;
+      boton.textContent = "…";
+
+      try {
+        const data = await supabaseRpc("panel_eliminar_invitado", {
+          p_token: token,
+          p_codigo: codigo
+        });
+
+        if (!data?.ok) {
+          if (data?.codigoError === "SESION_INVALIDA") {
+            limpiarSesion();
+            mostrarLogin();
+            toast("La sesión venció. Ingresa nuevamente.");
+            return;
+          }
+          throw new Error(data?.mensaje || "No se pudo eliminar el invitado.");
+        }
+
+        await cargarResumen(false);
+        renderLista(listaActiva);
+        toast(data.mensaje || "Invitado eliminado correctamente.");
+      } catch (error) {
+        boton.disabled = false;
+        boton.textContent = textoOriginal;
+        toast(error.message || "No se pudo eliminar el invitado.");
+      }
+    }
+
+    async function copiarInvitacion(codigo, boton) {
+      const codigoLimpio = String(codigo || "").trim();
+      if (!codigoLimpio) {
+        toast("No se encontró el código de la invitación.");
+        return;
+      }
+
+      if (!INVITATION_BASE_URL) { toast("Configura primero el dominio público de CR7."); return; }
+      const url = INVITATION_BASE_URL + encodeURIComponent(codigoLimpio);
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(url);
+        } else {
+          const temporal = document.createElement("textarea");
+          temporal.value = url;
+          temporal.setAttribute("readonly", "");
+          temporal.style.position = "fixed";
+          temporal.style.opacity = "0";
+          document.body.appendChild(temporal);
+          temporal.select();
+          document.execCommand("copy");
+          temporal.remove();
+        }
+
+        const textoOriginal = boton.textContent;
+        boton.textContent = "✓ Copiada";
+        boton.classList.add("copied");
+        toast("Invitación copiada");
+
+        setTimeout(() => {
+          boton.textContent = textoOriginal;
+          boton.classList.remove("copied");
+        }, 1800);
+
+      } catch (_) {
+        toast("No se pudo copiar la invitación.");
+      }
+    }
+
+    async function actualizarEstado(codigo, estado) {
+      const items = obtenerInvitados();
+      const invitado = items.find(i => i.codigo === codigo);
+      if (!invitado || !["confirmados","pendientes","noAsisten"].includes(estado)) return;
+      invitado.estado = estado;
+      invitado.asisten = estado === "confirmados" ? Number(invitado.cupos || 1) : 0;
+      invitado.fechaRespuesta = estado === "pendientes" ? "" : new Date().toISOString();
+      guardarInvitados(items);
+      await cargarResumen(false);
+      renderLista(estado);
+      toast("Estado del convocado actualizado");
+    }
+
+    document.addEventListener("click", (e) => {
+      const botonEstado = e.target.closest("[data-set-status]");
+      if (botonEstado) {
+        e.preventDefault();
+        actualizarEstado(botonEstado.dataset.statusCode, botonEstado.dataset.setStatus);
+        return;
+      }
+      const botonCopiar = e.target.closest("[data-copy-code]");
+      if (botonCopiar) {
+        e.preventDefault();
+        e.stopPropagation();
+        copiarInvitacion(botonCopiar.dataset.copyCode, botonCopiar);
+        return;
+      }
+
+      const botonEliminar = e.target.closest("[data-delete-code]");
+      if (botonEliminar) {
+        e.preventDefault();
+        e.stopPropagation();
+        eliminarInvitado(
+          botonEliminar.dataset.deleteCode,
+          botonEliminar.dataset.deleteName,
+          botonEliminar
+        );
+      }
+    });
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function formatearHora(valor) {
+      if (!valor) return "ahora";
+
+      const match = String(valor).match(/(\d{2}):(\d{2})/);
+      return match ? match[1] + ":" + match[2] : "ahora";
+    }
+
+    function iniciarAutoRefresh() {
+      clearInterval(refreshTimer);
+      refreshTimer = setInterval(() => {
+        if (!document.hidden && obtenerToken()) {
+          cargarResumen(false);
+        }
+      }, 60000);
+    }
+
+    async function logout() {
+      const token = obtenerToken();
+
+      limpiarSesion();
+      mostrarLogin();
+      clearInterval(refreshTimer);
+
+      if (token) {
+        try {
+          await supabaseRpc("panel_logout", {
+            p_token: token
+          });
+        } catch (_) {}
+      }
+
+      mostrarLogin();
+    }
+
+    $("loginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const pin = $("pinInput").value.trim();
+
+      if (!pin) {
+        $("loginError").textContent = "Ingresa el PIN.";
+        return;
+      }
+
+      login(pin);
+    });
+
+    $("pinInput").addEventListener("input", (e) => {
+      e.target.value = e.target.value.replace(/\D/g, "");
+    });
+
+    $("sortOrder").value = ordenLista;
+    $("sortOrder").addEventListener("change", (e) => {
+      ordenLista = e.target.value;
+      try { localStorage.setItem("cr7_panel_orden", ordenLista); } catch (_) {}
+      renderLista(listaActiva);
+    });
+
+    $("addGuestBtn").addEventListener("click", abrirModalInvitado);
+    $("closeGuestModalBtn").addEventListener("click", cerrarModalInvitado);
+    $("cancelGuestBtn").addEventListener("click", cerrarModalInvitado);
+    $("guestForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      agregarInvitado();
+    });
+    $("guestModal").addEventListener("click", (e) => {
+      if (e.target === $("guestModal")) cerrarModalInvitado();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !$("guestModal").classList.contains("hidden")) cerrarModalInvitado();
+    });
+
+    $("refreshBtn").addEventListener("click", () => cargarResumen(true));
+    $("logoutBtn").addEventListener("click", logout);
+    $("exportExcelBtn").addEventListener("click", descargarListaAsistentes);
+
+    document.querySelectorAll(".stat-card").forEach(card => {
+      card.addEventListener("click", () => {
+        renderLista(card.dataset.list);
+
+        requestAnimationFrame(() => {
+          $("listSection").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        });
+      });
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        momentoOculto = Date.now();
+        return;
+      }
+
+      if (momentoOculto !== null) {
+        const tiempoFuera = Date.now() - momentoOculto;
+        momentoOculto = null;
+
+        if (tiempoFuera >= AUSENCIA_MAX_MS) {
+          cerrarSesionPorAusencia();
+          return;
+        }
+      }
+
+      if (obtenerToken()) {
+        cargarResumen(false);
+      }
+    });
+
+    /* Respaldo para móviles: si el navegador conserva la página en memoria
+       y vuelve mediante pageshow, también comprobamos el tiempo de ausencia. */
+    window.addEventListener("pagehide", () => {
+      if (momentoOculto === null) {
+        momentoOculto = Date.now();
+      }
+    });
+
+    window.addEventListener("pageshow", () => {
+      if (momentoOculto !== null) {
+        const tiempoFuera = Date.now() - momentoOculto;
+        momentoOculto = null;
+
+        if (tiempoFuera >= AUSENCIA_MAX_MS) {
+          cerrarSesionPorAusencia();
+        }
+      }
+    });
+
+    (async function init() {
+      if (obtenerToken()) {
+        mostrarDashboard();
+        await cargarResumen(false);
+        iniciarAutoRefresh();
+      } else {
+        mostrarLogin();
+      }
+    })();
+  </script>
+</body>
+</html>
